@@ -16,6 +16,24 @@ struct body* allocBody(struct position pos) {
 	}
 	return body;
 }
+
+void addHead(struct snake* snake) {
+	struct position oldHeadPosition = snake->body->pos;
+	struct position direction		= snake->direction;
+	struct position newHeadPosition = { (oldHeadPosition.x + direction.x + rows) % rows, (oldHeadPosition.y + direction.y + cols) % cols };
+	struct body* newHead = allocBody(newHeadPosition);
+	newHead->next = snake->body;
+	snake->body = newHead;
+}
+
+void removeTail(struct snake* snake) {
+	struct body* tmp = snake->body;
+	while (tmp->next != NULL) {
+		tmp = tmp->next;
+	}
+	free(tmp);
+}
+
 struct snake* createSnake(int r, int c) {
 	struct snake* snake = (struct snake*)malloc(sizeof(struct snake));
 	if (snake != NULL) {
@@ -29,11 +47,12 @@ struct snake* createSnake(int r, int c) {
 }
 
 void move(struct snake* snake) {
-
+	grow(snake);
+	removeTail(snake);
 }
 
 void grow(struct snake* snake) {
-
+	addHead(snake);
 }
 
 void changeDir(struct position newDir, struct snake* snake) {
