@@ -15,6 +15,7 @@ struct snake {
 	struct body* body;
 	struct position direction;
 	int speed;
+	int length;
 };
 
 struct snake* createSnake(int r, int c);

@@ -24,6 +24,7 @@ void addHead(struct snake* snake) {
 	struct body* newHead = allocBody(newHeadPosition);
 	newHead->next = snake->body;
 	snake->body = newHead;
+	snake->length++;
 }
 
 void removeTail(struct snake* snake) {
@@ -32,6 +33,7 @@ void removeTail(struct snake* snake) {
 		tmp = tmp->next;
 	}
 	free(tmp);
+	snake->length--;
 }
 
 struct snake* createSnake(int r, int c) {
@@ -40,6 +42,7 @@ struct snake* createSnake(int r, int c) {
 		snake->body = allocBody(STARTING_POSITION);
 		snake->direction = { 1, 0 };
 		snake->speed = BASE_SPEED;
+		snake->length = 1;
 	}
 	rows = r;
 	cols = c;
