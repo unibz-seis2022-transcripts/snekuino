@@ -10,8 +10,9 @@
 #endif
 
 #include "canvas.h"
+#include "world.h"
 
 int main(int argc, char* argv[])
 {
-	printf("Hello World");
+	createWorld(-1, -1);
 }
