@@ -62,7 +62,16 @@ void changeDir(struct position newDir, struct snake* snake) {
 	snake->direction = newDir;
 }
 
-bool isKnotted(struct snake* snakes) {
+bool isKnotted(struct snake* snake) {
+	struct position head = snake->body->pos;
+	struct body* tmp = snake->body->next;
+	while (tmp != NULL) {
+		if (head.x == tmp->pos.x && head.y == tmp->pos.y) {
+			return true;
+		}
+		tmp = tmp->next;
+	}
+
 	return false;
 }
 

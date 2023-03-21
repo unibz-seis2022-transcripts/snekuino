@@ -26,7 +26,7 @@ void grow(struct snake* snake);
 
 void changeDir(struct position newDir, struct snake* snake);
 
-bool isKnotted(struct snake* snakes);
+bool isKnotted(struct snake* snake);
 
 struct position getHead(struct snake* snake);
 
