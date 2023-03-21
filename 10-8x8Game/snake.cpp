@@ -36,7 +36,7 @@ void removeTail(struct snake* snake) {
 	snake->length--;
 }
 
-struct snake* createSnake(int r, int c) {
+struct snake* createSnake(int _rows, int _cols) {
 	struct snake* snake = (struct snake*)malloc(sizeof(struct snake));
 	if (snake != NULL) {
 		snake->body = allocBody(STARTING_POSITION);
@@ -44,8 +44,8 @@ struct snake* createSnake(int r, int c) {
 		snake->speed = BASE_SPEED;
 		snake->length = 1;
 	}
-	rows = r;
-	cols = c;
+	rows = _rows;
+	cols = _cols;
 	return snake;
 }
 

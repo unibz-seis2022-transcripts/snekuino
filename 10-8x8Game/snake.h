@@ -18,7 +18,7 @@ struct snake {
 	int length;
 };
 
-struct snake* createSnake(int r, int c);
+struct snake* createSnake(int _rows, int _cols);
 
 void move(struct snake* snake);
 
