@@ -59,7 +59,7 @@ void grow(struct snake* snake) {
 }
 
 void changeDir(struct position newDir, struct snake* snake) {
-
+	snake->direction = newDir;
 }
 
 bool isKnotted(struct snake* snakes) {
@@ -67,9 +67,14 @@ bool isKnotted(struct snake* snakes) {
 }
 
 struct position getHead(struct snake* snake) {
-	return { 0, 0 };
+	return snake->body->pos;
 }
 
 struct position* getBody(struct snake* snake) {
-	return {};
+	struct position* bodyArray = (struct position*)malloc(snake->length * sizeof(struct position));
+	struct body* tmp = snake->body;
+	for (int i = 0; i < snake->length; i++, tmp = tmp->next) {
+		bodyArray[i] = tmp->pos;
+	}
+	return bodyArray;
 }
