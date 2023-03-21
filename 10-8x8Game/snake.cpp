@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-struct snake* createSnake() {
+struct snake* createSnake(int r, int c) {
 	struct snake* snake = (struct snake*)malloc(sizeof(struct snake));
 	return snake;
 }

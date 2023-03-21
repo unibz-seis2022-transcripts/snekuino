@@ -8,7 +8,7 @@ struct position {
 
 struct body {
 	struct position pos;
-	struct position* next;
+	struct body* next;
 };
 
 struct snake {
@@ -17,7 +17,7 @@ struct snake {
 	int speed;
 };
 
-struct snake* createSnake();
+struct snake* createSnake(int r, int c);
 
 void move(struct snake* snake);
 
