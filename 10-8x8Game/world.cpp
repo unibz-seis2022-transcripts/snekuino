@@ -6,6 +6,14 @@
 extern int rows;
 extern int cols;
 
+extern bool aPressed;
+extern bool sPressed;
+extern bool dPressed;
+extern bool wPressed;
+
+float delay = 0;
+struct position setDirection = { 0, 0 };
+
 bool isPositionInSnake(struct position pos, struct snake* snake) {
 	struct position* body = getBody(snake);
 
@@ -14,36 +22,83 @@ bool isPositionInSnake(struct position pos, struct snake* snake) {
 			return true;
 		}
 	}
-
 	return false;
 }
 
-position getNewFood(struct snake* snake) {
-	struct position pos = {};
-	
-	do {
-		pos.x = rand() % rows;
-		pos.y = rand() % rows;
-	} while (isPositionInSnake(pos, snake));
-
-	return pos;
+bool snakeWillEat(struct world* world) {
+	return 
+		(world->food.x == getHead(world->snake).x + world->snake->direction.x)
+		&&
+		(world->food.y == getHead(world->snake).y + world->snake->direction.y);
 }
 
-void createWorld(int _rows, int _cols) {
-	rows = _rows;
-	cols = _cols;
-	
-	// initialize snake
-	struct snake* snake = createSnake(rows, cols);
+void spawnNewFood(struct world* world) {
+	int freeSpaces = (rows * cols) - world->snake->length;
+	int newFoodPosition = rand() % freeSpaces+1;
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < cols; j++) {
+			if (!isPositionInSnake({ i, j }, world->snake)) {
+				newFoodPosition--;
+			}
 
-	// init food
-	srand(time(NULL));
+			if (newFoodPosition == 0) {
+				world->food = { i, j };
+				return;
+			}
+		}
+	}
+}
+
+struct world* createWorld() {
+	struct world* world = (struct world*)malloc(sizeof(struct world));
+	if (world != NULL) {
+		world->snake = createSnake();
+	}
+	spawnNewFood(world);
+
+	return world;
+}
+
+struct position getUpdatedDirection(struct position currentSetDir, struct snake* snake) {
+	struct position direciton = snake->direction;
+	if (aPressed)
+		if (snake->length == 1 || (currentSetDir.x != 1 && direciton.x != 1))
+			return { -1, 0 };
+	if (dPressed)
+		if (snake->length == 1 || (currentSetDir.x != -1 && direciton.x != -1))
+			return { 1, 0 };
+	if (sPressed)
+		if (snake->length == 1 || (currentSetDir.y != 1 && direciton.y != 1))
+			return { 0, -1 };
+	if (wPressed)
+		if (snake->length == 1 || (currentSetDir.y != -1 && direciton.y != -1))
+			return { 0, 1 };
+
+	return currentSetDir;
 }
 
 void makeStep(world* world) {
-	// check for food collision
-	// if so, grow snake and reposition food
+	if (snakeWillEat(world)) {
+		grow(world->snake);
+		world->snake->speed--;
+		spawnNewFood(world);
+	}
+	else {
+		move(world->snake);
+	}
+}
 
-	// move snake
-	// check for knot
+int updateWorld(world* world) {
+	if (isKnotted(world->snake)) {
+		printf("YOU DIED");
+		return 1;
+	}
+	setDirection = getUpdatedDirection(setDirection, world->snake);
+	if (delay == world->snake->speed) {
+		changeDir(setDirection, world->snake);
+		makeStep(world);
+		delay = 0;
+	}
+	delay++;
+	return 0;
 }

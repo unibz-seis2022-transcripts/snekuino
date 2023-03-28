@@ -8,8 +8,7 @@ struct world {
 	struct position food;
 };
 
-struct position getNewFoodPos();
 struct world* createWorld();
-void makeStep(struct world* world);
+int updateWorld(world* world);
 
 #endif

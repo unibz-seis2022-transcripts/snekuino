@@ -57,6 +57,29 @@ static void onError(int error, const char* desc)
 
 static void onKey(GLFWwindow* window, int key, int scanCode, int action, int mods)
 {
+	if (key == GLFW_KEY_A && action == GLFW_PRESS)
+		aPressed = true;
+
+	if (key == GLFW_KEY_A && action == GLFW_RELEASE)
+		aPressed = false;
+
+	if (key == GLFW_KEY_S && action == GLFW_PRESS)
+		sPressed = true;
+
+	if (key == GLFW_KEY_S && action == GLFW_RELEASE)
+		sPressed = false;
+
+	if (key == GLFW_KEY_D && action == GLFW_PRESS)
+		dPressed = true;
+
+	if (key == GLFW_KEY_D && action == GLFW_RELEASE)
+		dPressed = false;
+
+	if (key == GLFW_KEY_W && action == GLFW_PRESS)
+		wPressed = true;
+
+	if (key == GLFW_KEY_W && action == GLFW_RELEASE)
+		wPressed = false;
 }
 
 static void onChar(GLFWwindow* window, unsigned int c)
