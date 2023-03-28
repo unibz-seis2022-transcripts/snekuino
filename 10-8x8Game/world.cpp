@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include <time.h>
 
-int rows = -1;
-int cols = -1;
+extern int rows;
+extern int cols;
 
 bool isPositionInSnake(struct position pos, struct snake* snake) {
 	struct position* body = getBody(snake);

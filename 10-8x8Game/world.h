@@ -9,7 +9,7 @@ struct world {
 };
 
 struct position getNewFoodPos();
-void createWorld(int rows, int columns);
+struct world* createWorld();
 void makeStep(struct world* world);
 
 #endif

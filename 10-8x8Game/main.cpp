@@ -12,6 +12,9 @@
 #include "canvas.h"
 #include "world.h"
 
+int rows = 8;
+int cols = 8;
+
 int main(int argc, char* argv[])
 {
 	createWorld(-1, -1);

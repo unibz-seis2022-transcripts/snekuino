@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define BASE_SPEED 2000
+#define BASE_SPEED 20
 #define STARTING_POSITION { 0, 0 }
 
-int rows = 0;
-int cols = 0;
+extern int rows;
+extern int cols;
 
 struct body* allocBody(struct position pos) {
 	struct body* body = (struct body*)malloc(sizeof(struct body));
@@ -29,14 +29,16 @@ void addHead(struct snake* snake) {
 
 void removeTail(struct snake* snake) {
 	struct body* tmp = snake->body;
-	while (tmp->next != NULL) {
+	while (tmp->next->next != NULL) {
 		tmp = tmp->next;
 	}
-	free(tmp);
+	free(tmp->next);
+	tmp->next = NULL;
+
 	snake->length--;
 }
 
-struct snake* createSnake(int _rows, int _cols) {
+struct snake* createSnake() {
 	struct snake* snake = (struct snake*)malloc(sizeof(struct snake));
 	if (snake != NULL) {
 		snake->body = allocBody(STARTING_POSITION);
@@ -44,8 +46,6 @@ struct snake* createSnake(int _rows, int _cols) {
 		snake->speed = BASE_SPEED;
 		snake->length = 1;
 	}
-	rows = _rows;
-	cols = _cols;
 	return snake;
 }
 
@@ -71,7 +71,6 @@ bool isKnotted(struct snake* snake) {
 		}
 		tmp = tmp->next;
 	}
-
 	return false;
 }
 
