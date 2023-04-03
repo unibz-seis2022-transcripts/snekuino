@@ -7,6 +7,7 @@
 extern bool aPressed;
 extern bool enterPressed;
 extern bool dPressed;
+extern bool qPressed;
 
 struct gamemodeState {
 	int cursorPosition;
@@ -86,6 +87,10 @@ int promptGamemodeDecision()
 
 	while (updateGamemodeState(state) == 0 && canvasUpdate() == 0)
 	{
+		if (qPressed) {
+			canvasClose();
+			break;
+		}
 		updateGamemodePixels(state);
 		repaint();
 	}

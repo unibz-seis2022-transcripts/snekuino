@@ -80,6 +80,12 @@ static void onKey(GLFWwindow* window, int key, int scanCode, int action, int mod
 
 	if (key == GLFW_KEY_W && action == GLFW_RELEASE)
 		wPressed = false;
+	
+	if (key == GLFW_KEY_Q && action == GLFW_PRESS)
+		qPressed = true;
+
+	if (key == GLFW_KEY_Q && action == GLFW_RELEASE)
+		qPressed = false;
 
 	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
 		enterPressed = true;

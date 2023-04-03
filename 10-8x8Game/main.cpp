@@ -27,6 +27,7 @@ bool aPressed = false;
 bool dPressed = false;
 bool sPressed = false;
 bool wPressed = false;
+bool qPressed = false;
 bool enterPressed = false;
 
 struct world* world;
@@ -56,7 +57,6 @@ void cleanup(struct world* world)
 {
 	free(world->snake);
 	free(world);
-	canvasClose();
 }
 
 int main(int argc, char* argv[])
@@ -67,27 +67,37 @@ int main(int argc, char* argv[])
 		printf("ERROR: init failed (invalid argument?)\n");
 		return EXIT_FAILURE;
 	}
-	//int chosenMode = promptGamemodeDecision();
+	while (true) {
+		switch (promptGamemodeDecision()) {
+			case 1:
+				world = createWorld(0, 1);
+				break;
+			case 2:
+				world = createWorld(15, 2);
+				break;
+			default:
+				world = createWorld(0, 1);
+				break;
+		}
 
-	switch (promptGamemodeDecision()) {
-		case 1:
-			world = createWorld(0, 1);
+		if (qPressed) {
 			break;
-		case 2:
-			world = createWorld(15, 2);
-			break;
-		default:
-			world = createWorld(0, 1);
-			break;
+		}
+
+		while (updateWorld(world) == 0 && canvasUpdate() == 0) {
+			updateGamePixels(world);
+			repaint();
+			if (qPressed) {
+				break;
+			}
+		}
+
+		qPressed = false;
+		//score animation
+
+		cleanup(world);
 	}
 
-	while (updateWorld(world) == 0 && canvasUpdate() == 0)
-	{
-		updateGamePixels(world);
-		repaint();
-	}
-
-	cleanup(world);
 
 	return EXIT_SUCCESS;
 }

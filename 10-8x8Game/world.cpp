@@ -14,9 +14,8 @@ extern bool sPressed;
 extern bool dPressed;
 extern bool wPressed;
 
-float delay = 0;
-int growDelay = 0;
-struct position setDirection = { 0, 0 };
+float delay;
+struct position setDirection;
 
 bool isPositionOccupied(struct position pos, struct position* occupied, int occupiedLenght) {
 	for (int i = 0; i < occupiedLenght; i++) {
@@ -59,6 +58,9 @@ void spawnNewEntity(struct world* world, int freeSpaces, struct position* entity
 }
 
 struct world* createWorld(int obstacleNumber_, int foodNumber_) {
+	delay = 0;
+	setDirection = { 0, 0 };
+
 	struct world* world = (struct world*)malloc(sizeof(struct world));
 	if (world != NULL) {
 		world->snake = createSnake();
@@ -121,7 +123,6 @@ bool isCrushed(world* world) {
 
 int updateWorld(world* world) {
 	if (isKnotted(world->snake) || isCrushed(world)) {
-		printf("YOU DIED");
 		return 1;
 	}
 	setDirection = getUpdatedDirection(setDirection, world->snake);
