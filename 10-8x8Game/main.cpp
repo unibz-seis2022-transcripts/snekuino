@@ -37,7 +37,11 @@ void updatePixels(struct world* world)
 	}
 
 	for (int i = 0; i < world->foodAmount; i++) {
-		canvasSetPixel(world->food[i].x, world->food[i].y, 0.25);
+		canvasSetPixel(world->food[i].x, world->food[i].y, 0.5);
+	}
+
+	for (int i = 0; i < world->obstacleAmount; i++) {
+		canvasSetPixel(world->obstacle[i].x, world->obstacle[i].y, 0.25);
 	}
 
 	struct position* snakeBody = getBody(world->snake);

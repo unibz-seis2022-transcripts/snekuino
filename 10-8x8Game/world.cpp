@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include <time.h>
 
-#define FOOD_AMOUNT 3.0
+#define FOOD_AMOUNT 2.0
+#define OBSTACLE_AMOUNT 15.0
 
 extern int rows;
 extern int cols;
@@ -14,22 +15,12 @@ extern bool dPressed;
 extern bool wPressed;
 
 float delay = 0;
+int growDelay = 0;
 struct position setDirection = { 0, 0 };
 
-bool isPositionInSnake(struct position pos, struct snake* snake) {
-	struct position* body = getBody(snake);
-
-	for (int i = 0; i < snake->length; i++) {
-		if (body[i].x == pos.x && body[i].y == pos.y) {
-			return true;
-		}
-	}
-	return false;
-}
-
-bool isPositionFood(struct position pos, struct position* food, int foodAmount) {
-	for (int i = 0; i < foodAmount; i++) {
-		if (food[i].x == pos.x && food[i].y == pos.y) {
+bool isPositionOccupied(struct position pos, struct position* occupied, int occupiedLenght) {
+	for (int i = 0; i < occupiedLenght; i++) {
+		if (occupied[i].x == pos.x && occupied[i].y == pos.y) {
 			return true;
 		}
 	}
@@ -40,25 +31,27 @@ int snakeWillEat(struct world* world) {
 	for (int i = 0; i < world->foodAmount; i++) {
 		if ((world->food[i].x == getHead(world->snake).x + world->snake->direction.x)
 			&&
-		    (world->food[i].y == getHead(world->snake).y + world->snake->direction.y)) {
-				return i;
+		    (world->food[i].y == getHead(world->snake).y + world->snake->direction.y)
+		) {
+			return i;
 		}
-
 	}
 	return -1;
 }
 
-void spawnNewFood(struct world* world, int position) {
-	int freeSpaces = (rows * cols) - world->snake->length - world->foodAmount;
-	int newFoodPosition = rand() % freeSpaces+1;
+void spawnNewEntity(struct world* world, int freeSpaces, struct position* entityArray, int index) {
+	int newEntityPosition = rand() % freeSpaces+1;
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			if (!isPositionInSnake({ i, j }, world->snake) && !isPositionFood({i, j}, world->food, world->foodAmount)) {
-				newFoodPosition--;
+			if (!isPositionOccupied({ i, j }, getBody(world->snake), world->snake->length)
+			 && !isPositionOccupied({i, j}, world->obstacle, world->obstacleAmount)
+			 && !isPositionOccupied({ i, j }, world->food, world->foodAmount)
+			) {
+				newEntityPosition--;
 			}
 
-			if (newFoodPosition == 0) {
-				world->food[position] = {i, j};
+			if (newEntityPosition == 0) {
+				entityArray[index] = {i, j};
 				return;
 			}
 		}
@@ -70,10 +63,16 @@ struct world* createWorld() {
 	if (world != NULL) {
 		world->snake = createSnake();
 		world->foodAmount = FOOD_AMOUNT;
+		world->obstacleAmount = OBSTACLE_AMOUNT;
 		world->food = (struct position*)malloc(sizeof(struct position) * (world->foodAmount));
+		world->obstacle = (struct position*)malloc(sizeof(struct position) * (world->obstacleAmount));
 		
+		for (int i = 0; i < world->obstacleAmount; i++) {
+			spawnNewEntity(world, ((rows * cols) - world->snake->length - i), world->obstacle, i);
+		}
+
 		for (int i = 0; i < world->foodAmount; i++) {
-			spawnNewFood(world, i);
+			spawnNewEntity(world, ((rows * cols) - world->snake->length - world->obstacleAmount - i), world->food, i);
 		}
 	}
 
@@ -103,15 +102,24 @@ void makeStep(world* world) {
 	if (eatenFoodIndex != -1) {
 		grow(world->snake);
 		world->snake->speed -= 5;
-		spawnNewFood(world, eatenFoodIndex);
+		spawnNewEntity(world, ((rows * cols) - world->snake->length - world->obstacleAmount - world->foodAmount), world->food, eatenFoodIndex);
 	}
 	else {
 		move(world->snake);
 	}
 }
 
+bool isCrushed(world* world) {
+	for (int i = 0; i < world->obstacleAmount; i++) {
+		if (isPositionOccupied(world->obstacle[i], getBody(world->snake), world->snake->length)) {
+			return true;
+		}
+	}
+	return false;
+}
+
 int updateWorld(world* world) {
-	if (isKnotted(world->snake)) {
+	if (isKnotted(world->snake) || isCrushed(world)) {
 		printf("YOU DIED");
 		return 1;
 	}
