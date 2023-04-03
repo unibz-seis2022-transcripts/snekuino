@@ -5,7 +5,8 @@
 
 struct world {
 	struct snake* snake;
-	struct position food;
+	struct position* food;
+	int foodAmount;
 };
 
 struct world* createWorld();

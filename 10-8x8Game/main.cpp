@@ -36,8 +36,9 @@ void updatePixels(struct world* world)
 		}
 	}
 
-	canvasSetPixel(world->food.x, world->food.y, 0.25);
-
+	for (int i = 0; i < world->foodAmount; i++) {
+		canvasSetPixel(world->food[i].x, world->food[i].y, 0.25);
+	}
 
 	struct position* snakeBody = getBody(world->snake);
 	for (int i = 1; i < world->snake->length; i++) {
@@ -57,6 +58,8 @@ void cleanup(struct world* world)
 
 int main(int argc, char* argv[])
 {
+
+
 	srand(time(NULL));
 	if (canvasInit(WINDOW_X, WINDOW_Y, WINDOW_WIDTH, WINDOW_HEIGHT, rows, cols))
 	{

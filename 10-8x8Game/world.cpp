@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <time.h>
 
+#define FOOD_AMOUNT 3.0
+
 extern int rows;
 extern int cols;
 
@@ -25,24 +27,38 @@ bool isPositionInSnake(struct position pos, struct snake* snake) {
 	return false;
 }
 
-bool snakeWillEat(struct world* world) {
-	return 
-		(world->food.x == getHead(world->snake).x + world->snake->direction.x)
-		&&
-		(world->food.y == getHead(world->snake).y + world->snake->direction.y);
+bool isPositionFood(struct position pos, struct position* food, int foodAmount) {
+	for (int i = 0; i < foodAmount; i++) {
+		if (food[i].x == pos.x && food[i].y == pos.y) {
+			return true;
+		}
+	}
+	return false;
 }
 
-void spawnNewFood(struct world* world) {
-	int freeSpaces = (rows * cols) - world->snake->length;
+int snakeWillEat(struct world* world) {
+	for (int i = 0; i < world->foodAmount; i++) {
+		if ((world->food[i].x == getHead(world->snake).x + world->snake->direction.x)
+			&&
+		    (world->food[i].y == getHead(world->snake).y + world->snake->direction.y)) {
+				return i;
+		}
+
+	}
+	return -1;
+}
+
+void spawnNewFood(struct world* world, int position) {
+	int freeSpaces = (rows * cols) - world->snake->length - world->foodAmount;
 	int newFoodPosition = rand() % freeSpaces+1;
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			if (!isPositionInSnake({ i, j }, world->snake)) {
+			if (!isPositionInSnake({ i, j }, world->snake) && !isPositionFood({i, j}, world->food, world->foodAmount)) {
 				newFoodPosition--;
 			}
 
 			if (newFoodPosition == 0) {
-				world->food = { i, j };
+				world->food[position] = {i, j};
 				return;
 			}
 		}
@@ -53,8 +69,13 @@ struct world* createWorld() {
 	struct world* world = (struct world*)malloc(sizeof(struct world));
 	if (world != NULL) {
 		world->snake = createSnake();
+		world->foodAmount = FOOD_AMOUNT;
+		world->food = (struct position*)malloc(sizeof(struct position) * (world->foodAmount));
+		
+		for (int i = 0; i < world->foodAmount; i++) {
+			spawnNewFood(world, i);
+		}
 	}
-	spawnNewFood(world);
 
 	return world;
 }
@@ -78,10 +99,11 @@ struct position getUpdatedDirection(struct position currentSetDir, struct snake*
 }
 
 void makeStep(world* world) {
-	if (snakeWillEat(world)) {
+	int eatenFoodIndex = snakeWillEat(world);
+	if (eatenFoodIndex != -1) {
 		grow(world->snake);
 		world->snake->speed -= 5;
-		spawnNewFood(world);
+		spawnNewFood(world, eatenFoodIndex);
 	}
 	else {
 		move(world->snake);
