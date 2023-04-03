@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define BASE_SPEED 20
+#define BASE_SPEED 200
 #define STARTING_POSITION { 0, 0 }
 
 extern int rows;

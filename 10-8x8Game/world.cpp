@@ -60,18 +60,18 @@ struct world* createWorld() {
 }
 
 struct position getUpdatedDirection(struct position currentSetDir, struct snake* snake) {
-	struct position direciton = snake->direction;
+	struct position direction = snake->direction;
 	if (aPressed)
-		if (snake->length == 1 || (currentSetDir.x != 1 && direciton.x != 1))
+		if (snake->length == 1 || (currentSetDir.x != 1 && direction.x != 1))
 			return { -1, 0 };
 	if (dPressed)
-		if (snake->length == 1 || (currentSetDir.x != -1 && direciton.x != -1))
+		if (snake->length == 1 || (currentSetDir.x != -1 && direction.x != -1))
 			return { 1, 0 };
 	if (sPressed)
-		if (snake->length == 1 || (currentSetDir.y != 1 && direciton.y != 1))
+		if (snake->length == 1 || (currentSetDir.y != 1 && direction.y != 1))
 			return { 0, -1 };
 	if (wPressed)
-		if (snake->length == 1 || (currentSetDir.y != -1 && direciton.y != -1))
+		if (snake->length == 1 || (currentSetDir.y != -1 && direction.y != -1))
 			return { 0, 1 };
 
 	return currentSetDir;
@@ -80,7 +80,7 @@ struct position getUpdatedDirection(struct position currentSetDir, struct snake*
 void makeStep(world* world) {
 	if (snakeWillEat(world)) {
 		grow(world->snake);
-		world->snake->speed--;
+		world->snake->speed -= 5;
 		spawnNewFood(world);
 	}
 	else {
@@ -94,11 +94,11 @@ int updateWorld(world* world) {
 		return 1;
 	}
 	setDirection = getUpdatedDirection(setDirection, world->snake);
-	if (delay == world->snake->speed) {
+	if (delay <= 0) {
 		changeDir(setDirection, world->snake);
 		makeStep(world);
-		delay = 0;
+		delay = world->snake->speed;
 	}
-	delay++;
+	delay-=10;
 	return 0;
 }
