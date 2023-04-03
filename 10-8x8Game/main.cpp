@@ -11,6 +11,8 @@
 
 #include "canvas.h"
 #include "world.h"
+#include "pixelhelper.h"
+#include "gamemode.h"
 
 #define WINDOW_X	100
 #define WINDOW_Y	100
@@ -26,15 +28,8 @@ bool dPressed = false;
 bool sPressed = false;
 bool wPressed = false;
 
-void updatePixels(struct world* world)
-{
-	for (int i = 0; i < rows; i++)
-	{
-		for (int j = 0; j < cols; j++)
-		{
-			canvasSetPixel(i, j, 0);
-		}
-	}
+void updateGamePixels(struct world* world) {
+	clearPixels();
 
 	for (int i = 0; i < world->foodAmount; i++) {
 		canvasSetPixel(world->food[i].x, world->food[i].y, 0.5);
@@ -50,7 +45,6 @@ void updatePixels(struct world* world)
 	}
 
 	canvasSetPixel(getHead(world->snake).x, getHead(world->snake).y, 1);
-
 }
 
 void cleanup(struct world* world)
@@ -62,20 +56,19 @@ void cleanup(struct world* world)
 
 int main(int argc, char* argv[])
 {
-
-
 	srand(time(NULL));
 	if (canvasInit(WINDOW_X, WINDOW_Y, WINDOW_WIDTH, WINDOW_HEIGHT, rows, cols))
 	{
 		printf("ERROR: init failed (invalid argument?)\n");
 		return EXIT_FAILURE;
 	}
+	int chosenMode = promptGamemodeDecision();
 
 	struct world* world = createWorld();
 
 	while (updateWorld(world) == 0 && canvasUpdate() == 0)
 	{
-		updatePixels(world);
+		updateGamePixels(world);
 		repaint();
 	}
 
