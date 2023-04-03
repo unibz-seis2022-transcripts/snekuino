@@ -80,6 +80,12 @@ static void onKey(GLFWwindow* window, int key, int scanCode, int action, int mod
 
 	if (key == GLFW_KEY_W && action == GLFW_RELEASE)
 		wPressed = false;
+
+	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
+		enterPressed = true;
+
+	if (key == GLFW_KEY_ENTER && action == GLFW_RELEASE)
+		enterPressed = false;
 }
 
 static void onChar(GLFWwindow* window, unsigned int c)

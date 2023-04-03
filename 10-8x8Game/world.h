@@ -11,7 +11,7 @@ struct world {
 	int obstacleAmount;
 };
 
-struct world* createWorld();
+struct world* createWorld(int obstacleNumber_, int foodNumber_);
 int updateWorld(world* world);
 
 #endif

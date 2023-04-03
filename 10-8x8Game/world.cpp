@@ -58,13 +58,14 @@ void spawnNewEntity(struct world* world, int freeSpaces, struct position* entity
 	}
 }
 
-struct world* createWorld() {
+struct world* createWorld(int obstacleNumber_, int foodNumber_) {
 	struct world* world = (struct world*)malloc(sizeof(struct world));
 	if (world != NULL) {
 		world->snake = createSnake();
-		world->foodAmount = FOOD_AMOUNT;
-		world->obstacleAmount = OBSTACLE_AMOUNT;
+		world->foodAmount = foodNumber_;
 		world->food = (struct position*)malloc(sizeof(struct position) * (world->foodAmount));
+		world->foodBlinking = true;
+		world->obstacleAmount = obstacleNumber_;
 		world->obstacle = (struct position*)malloc(sizeof(struct position) * (world->obstacleAmount));
 		
 		for (int i = 0; i < world->obstacleAmount; i++) {

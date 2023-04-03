@@ -27,6 +27,9 @@ bool aPressed = false;
 bool dPressed = false;
 bool sPressed = false;
 bool wPressed = false;
+bool enterPressed = false;
+
+struct world* world;
 
 void updateGamePixels(struct world* world) {
 	clearPixels();
@@ -62,9 +65,19 @@ int main(int argc, char* argv[])
 		printf("ERROR: init failed (invalid argument?)\n");
 		return EXIT_FAILURE;
 	}
-	int chosenMode = promptGamemodeDecision();
+	//int chosenMode = promptGamemodeDecision();
 
-	struct world* world = createWorld();
+	switch (promptGamemodeDecision()) {
+		case 1:
+			world = createWorld(0, 1);
+			break;
+		case 2:
+			world = createWorld(15, 2);
+			break;
+		default:
+			world = createWorld(0, 1);
+			break;
+	}
 
 	while (updateWorld(world) == 0 && canvasUpdate() == 0)
 	{

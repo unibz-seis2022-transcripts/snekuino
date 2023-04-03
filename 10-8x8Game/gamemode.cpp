@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 extern bool aPressed;
-extern bool sPressed;
+extern bool enterPressed;
 extern bool dPressed;
 
 struct gamemodeState {
@@ -56,22 +56,22 @@ void updateGamemodePixels(struct gamemodeState* state) {
 	drawPixels(numberOnePixels, numberOnePixelsLength);
 	drawPixels(numberTwoPixels, numberTwoPixelsLength);
 
-	if (state->cursorPosition == 0) {
+	if (state->cursorPosition == 1) {
 		drawPixels(cursorOnePixels, cursorPixelsLength);
 	}
-	if (state->cursorPosition == 1) {
+	if (state->cursorPosition == 2) {
 		drawPixels(cursorTwoPixels, cursorPixelsLength);
 	}
 }
 
 int updateGamemodeState(gamemodeState* state) {
 	if (aPressed) {
-		state->cursorPosition = 0;
-	};
-	if (dPressed) {
 		state->cursorPosition = 1;
 	};
-	if (sPressed) {
+	if (dPressed) {
+		state->cursorPosition = 2;
+	};
+	if (enterPressed) {
 		state->chosenGamemode = state->cursorPosition;
 		return 1;
 	};
@@ -82,7 +82,7 @@ int updateGamemodeState(gamemodeState* state) {
 int promptGamemodeDecision()
 {
 	struct gamemodeState* state = (struct gamemodeState*)malloc(sizeof(struct gamemodeState));
-	state->cursorPosition = 0;
+	state->cursorPosition = 1;
 
 	while (updateGamemodeState(state) == 0 && canvasUpdate() == 0)
 	{
