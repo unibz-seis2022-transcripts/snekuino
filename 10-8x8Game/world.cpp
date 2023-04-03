@@ -129,6 +129,7 @@ int updateWorld(world* world) {
 		changeDir(setDirection, world->snake);
 		makeStep(world);
 		delay = world->snake->speed;
+		world->foodBlinking = !world->foodBlinking;
 	}
 	delay-=10;
 	return 0;

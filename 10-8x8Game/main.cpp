@@ -34,8 +34,10 @@ struct world* world;
 void updateGamePixels(struct world* world) {
 	clearPixels();
 
-	for (int i = 0; i < world->foodAmount; i++) {
-		canvasSetPixel(world->food[i].x, world->food[i].y, 0.5);
+	if (world->foodBlinking) {
+		for (int i = 0; i < world->foodAmount; i++) {
+			canvasSetPixel(world->food[i].x, world->food[i].y, 0.5);
+		}
 	}
 
 	for (int i = 0; i < world->obstacleAmount; i++) {
