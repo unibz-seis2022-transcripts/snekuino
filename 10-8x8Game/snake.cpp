@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define BASE_SPEED 20
+#define BASE_SPEED 200
 #define STARTING_POSITION { 0, 0 }
 
 extern int rows;
@@ -42,7 +42,7 @@ struct snake* createSnake() {
 	struct snake* snake = (struct snake*)malloc(sizeof(struct snake));
 	if (snake != NULL) {
 		snake->body = allocBody(STARTING_POSITION);
-		snake->direction = { 1, 0 };
+		snake->direction = { 0, 0 };
 		snake->speed = BASE_SPEED;
 		snake->length = 1;
 	}

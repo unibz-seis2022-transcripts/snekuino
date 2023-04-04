@@ -14,7 +14,7 @@ struct body {
 struct snake {
 	struct body* body;
 	struct position direction;
-	int speed;
+	float speed;
 	int length;
 };
 

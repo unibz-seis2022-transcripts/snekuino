@@ -5,11 +5,14 @@
 
 struct world {
 	struct snake* snake;
-	struct position food;
+	struct position* food;
+	int foodAmount;
+	bool foodBlinking;
+	struct position* obstacle;
+	int obstacleAmount;
 };
 
-struct position getNewFoodPos();
-struct world* createWorld();
-void makeStep(struct world* world);
+struct world* createWorld(int obstacleNumber_, int foodNumber_);
+int updateWorld(world* world);
 
 #endif

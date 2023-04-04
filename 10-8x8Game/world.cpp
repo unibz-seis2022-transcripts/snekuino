@@ -3,47 +3,135 @@
 #include <stdio.h>
 #include <time.h>
 
+#define FOOD_AMOUNT 2.0
+#define OBSTACLE_AMOUNT 15.0
+
 extern int rows;
 extern int cols;
 
-bool isPositionInSnake(struct position pos, struct snake* snake) {
-	struct position* body = getBody(snake);
+extern bool aPressed;
+extern bool sPressed;
+extern bool dPressed;
+extern bool wPressed;
 
-	for (int i = 0; i < snake->length; i++) {
-		if (body[i].x == pos.x && body[i].y == pos.y) {
+float delay;
+struct position setDirection;
+
+bool isPositionOccupied(struct position pos, struct position* occupied, int occupiedLenght) {
+	for (int i = 0; i < occupiedLenght; i++) {
+		if (occupied[i].x == pos.x && occupied[i].y == pos.y) {
 			return true;
 		}
 	}
-
 	return false;
 }
 
-position getNewFood(struct snake* snake) {
-	struct position pos = {};
-	
-	do {
-		pos.x = rand() % rows;
-		pos.y = rand() % rows;
-	} while (isPositionInSnake(pos, snake));
-
-	return pos;
+int snakeWillEat(struct world* world) {
+	for (int i = 0; i < world->foodAmount; i++) {
+		if ((world->food[i].x == getHead(world->snake).x + world->snake->direction.x)
+			&&
+		    (world->food[i].y == getHead(world->snake).y + world->snake->direction.y)
+		) {
+			return i;
+		}
+	}
+	return -1;
 }
 
-void createWorld(int _rows, int _cols) {
-	rows = _rows;
-	cols = _cols;
-	
-	// initialize snake
-	struct snake* snake = createSnake(rows, cols);
+void spawnNewEntity(struct world* world, int freeSpaces, struct position* entityArray, int index) {
+	int newEntityPosition = rand() % freeSpaces+1;
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < cols; j++) {
+			if (!isPositionOccupied({ i, j }, getBody(world->snake), world->snake->length)
+			 && !isPositionOccupied({i, j}, world->obstacle, world->obstacleAmount)
+			 && !isPositionOccupied({ i, j }, world->food, world->foodAmount)
+			) {
+				newEntityPosition--;
+			}
 
-	// init food
-	srand(time(NULL));
+			if (newEntityPosition == 0) {
+				entityArray[index] = {i, j};
+				return;
+			}
+		}
+	}
+}
+
+struct world* createWorld(int obstacleNumber_, int foodNumber_) {
+	delay = 0;
+	setDirection = { 0, 0 };
+
+	struct world* world = (struct world*)malloc(sizeof(struct world));
+	if (world != NULL) {
+		world->snake = createSnake();
+		world->foodAmount = foodNumber_;
+		world->food = (struct position*)malloc(sizeof(struct position) * (world->foodAmount));
+		world->foodBlinking = true;
+		world->obstacleAmount = obstacleNumber_;
+		world->obstacle = (struct position*)malloc(sizeof(struct position) * (world->obstacleAmount));
+		
+		for (int i = 0; i < world->obstacleAmount; i++) {
+			spawnNewEntity(world, ((rows * cols) - world->snake->length - i), world->obstacle, i);
+		}
+
+		for (int i = 0; i < world->foodAmount; i++) {
+			spawnNewEntity(world, ((rows * cols) - world->snake->length - world->obstacleAmount - i), world->food, i);
+		}
+	}
+
+	return world;
+}
+
+struct position getUpdatedDirection(struct position currentSetDir, struct snake* snake) {
+	struct position direction = snake->direction;
+	if (aPressed)
+		if (snake->length == 1 || (currentSetDir.x != 1 && direction.x != 1))
+			return { -1, 0 };
+	if (dPressed)
+		if (snake->length == 1 || (currentSetDir.x != -1 && direction.x != -1))
+			return { 1, 0 };
+	if (sPressed)
+		if (snake->length == 1 || (currentSetDir.y != 1 && direction.y != 1))
+			return { 0, -1 };
+	if (wPressed)
+		if (snake->length == 1 || (currentSetDir.y != -1 && direction.y != -1))
+			return { 0, 1 };
+
+	return currentSetDir;
 }
 
 void makeStep(world* world) {
-	// check for food collision
-	// if so, grow snake and reposition food
+	int eatenFoodIndex = snakeWillEat(world);
+	if (eatenFoodIndex != -1) {
+		grow(world->snake);
+		world->snake->speed -= 5;
+		spawnNewEntity(world, ((rows * cols) - world->snake->length - world->obstacleAmount - world->foodAmount), world->food, eatenFoodIndex);
+	}
+	else {
+		move(world->snake);
+	}
+}
 
-	// move snake
-	// check for knot
+bool isCrushed(world* world) {
+	for (int i = 0; i < world->obstacleAmount; i++) {
+		if (isPositionOccupied(world->obstacle[i], getBody(world->snake), world->snake->length)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+int updateWorld(world* world) {
+	if (isKnotted(world->snake) || isCrushed(world)) {
+		return 1;
+	}
+	setDirection = getUpdatedDirection(setDirection, world->snake);
+	if (delay <= 0) {
+		changeDir(setDirection, world->snake);
+		makeStep(world);
+		delay = world->snake->speed;
+		world->foodBlinking = !world->foodBlinking;
+	}
+	delay-=10;
+	return 0;
 }
