@@ -9,14 +9,6 @@
 extern int rows;
 extern int cols;
 
-extern bool aPressed;
-extern bool sPressed;
-extern bool dPressed;
-extern bool wPressed;
-
-float delay;
-struct position setDirection;
-
 bool isPositionOccupied(struct position pos, struct position* occupied, int occupiedLenght) {
 	for (int i = 0; i < occupiedLenght; i++) {
 		if (occupied[i].x == pos.x && occupied[i].y == pos.y) {
@@ -58,15 +50,11 @@ void spawnNewEntity(struct world* world, int freeSpaces, struct position* entity
 }
 
 struct world* createWorld(int obstacleNumber_, int foodNumber_) {
-	delay = 0;
-	setDirection = { 0, 0 };
-
 	struct world* world = (struct world*)malloc(sizeof(struct world));
 	if (world != NULL) {
 		world->snake = createSnake();
 		world->foodAmount = foodNumber_;
 		world->food = (struct position*)malloc(sizeof(struct position) * (world->foodAmount));
-		world->foodBlinking = true;
 		world->obstacleAmount = obstacleNumber_;
 		world->obstacle = (struct position*)malloc(sizeof(struct position) * (world->obstacleAmount));
 		
@@ -80,24 +68,6 @@ struct world* createWorld(int obstacleNumber_, int foodNumber_) {
 	}
 
 	return world;
-}
-
-struct position getUpdatedDirection(struct position currentSetDir, struct snake* snake) {
-	struct position direction = snake->direction;
-	if (aPressed)
-		if (snake->length == 1 || (currentSetDir.x != 1 && direction.x != 1))
-			return { -1, 0 };
-	if (dPressed)
-		if (snake->length == 1 || (currentSetDir.x != -1 && direction.x != -1))
-			return { 1, 0 };
-	if (sPressed)
-		if (snake->length == 1 || (currentSetDir.y != 1 && direction.y != 1))
-			return { 0, -1 };
-	if (wPressed)
-		if (snake->length == 1 || (currentSetDir.y != -1 && direction.y != -1))
-			return { 0, 1 };
-
-	return currentSetDir;
 }
 
 void makeStep(world* world) {
@@ -125,13 +95,6 @@ int updateWorld(world* world) {
 	if (isKnotted(world->snake) || isCrushed(world)) {
 		return 1;
 	}
-	setDirection = getUpdatedDirection(setDirection, world->snake);
-	if (delay <= 0) {
-		changeDir(setDirection, world->snake);
-		makeStep(world);
-		delay = world->snake->speed;
-		world->foodBlinking = !world->foodBlinking;
-	}
-	delay-=10;
+	makeStep(world);
 	return 0;
 }

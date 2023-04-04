@@ -9,10 +9,7 @@ extern bool enterPressed;
 extern bool dPressed;
 extern bool qPressed;
 
-struct gamemodeState {
-	int cursorPosition;
-	int chosenGamemode;
-};
+gameMode chosenGamemode;
 
 position numberOnePixels[] = {
 		{ 1, 4 },
@@ -51,49 +48,39 @@ position cursorTwoPixels[] = {
 	{ 5, 6 },
 };
 
-void updateGamemodePixels(struct gamemodeState* state) { 
+void updateGamemodePixels() { 
 	clearPixels();
 
 	drawPixels(numberOnePixels, numberOnePixelsLength);
 	drawPixels(numberTwoPixels, numberTwoPixelsLength);
 
-	if (state->cursorPosition == 1) {
+	if (chosenGamemode == CLASSIC) {
 		drawPixels(cursorOnePixels, cursorPixelsLength);
 	}
-	if (state->cursorPosition == 2) {
+	if (chosenGamemode == LABYRINTH) {
 		drawPixels(cursorTwoPixels, cursorPixelsLength);
 	}
 }
 
-int updateGamemodeState(gamemodeState* state) {
-	if (aPressed) {
-		state->cursorPosition = 1;
-	};
-	if (dPressed) {
-		state->cursorPosition = 2;
-	};
-	if (enterPressed) {
-		state->chosenGamemode = state->cursorPosition;
-		return 1;
-	};
-
-	return 0;
-}
-
-int promptGamemodeDecision()
+gameMode promptGamemodeDecision()
 {
-	struct gamemodeState* state = (struct gamemodeState*)malloc(sizeof(struct gamemodeState));
-	state->cursorPosition = 1;
+	chosenGamemode = CLASSIC;
 
-	while (updateGamemodeState(state) == 0 && canvasUpdate() == 0)
+	while (!enterPressed && canvasUpdate() == 0)
 	{
+		if (aPressed) {
+			chosenGamemode = CLASSIC;
+		};
+		if (dPressed) {
+			chosenGamemode = LABYRINTH;
+		};
 		if (qPressed) {
 			canvasClose();
 			break;
 		}
-		updateGamemodePixels(state);
+		updateGamemodePixels();
 		repaint();
 	}
 
-	return state->chosenGamemode;
+	return chosenGamemode;
 }

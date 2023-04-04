@@ -1,3 +1,9 @@
 #pragma once
 
-int promptGamemodeDecision();
+
+enum gameMode {
+	CLASSIC,
+	LABYRINTH
+};
+
+gameMode promptGamemodeDecision();

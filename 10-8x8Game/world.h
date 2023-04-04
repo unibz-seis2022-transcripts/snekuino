@@ -7,7 +7,6 @@ struct world {
 	struct snake* snake;
 	struct position* food;
 	int foodAmount;
-	bool foodBlinking;
 	struct position* obstacle;
 	int obstacleAmount;
 };

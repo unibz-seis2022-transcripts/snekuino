@@ -13,6 +13,7 @@
 #include "world.h"
 #include "pixelhelper.h"
 #include "gamemode.h"
+#include "game.h"
 
 #define WINDOW_X	100
 #define WINDOW_Y	100
@@ -30,33 +31,34 @@ bool wPressed = false;
 bool qPressed = false;
 bool enterPressed = false;
 
-struct world* world;
+struct game* game;
 
-void updateGamePixels(struct world* world) {
+void updateGamePixels(struct game* game) {
 	clearPixels();
 
-	if (world->foodBlinking) {
-		for (int i = 0; i < world->foodAmount; i++) {
-			canvasSetPixel(world->food[i].x, world->food[i].y, 0.5);
+	if (game->foodBlinking) {
+		for (int i = 0; i < game->world->foodAmount; i++) {
+			canvasSetPixel(game->world->food[i].x, game->world->food[i].y, 0.5);
 		}
 	}
 
-	for (int i = 0; i < world->obstacleAmount; i++) {
-		canvasSetPixel(world->obstacle[i].x, world->obstacle[i].y, 0.25);
+	for (int i = 0; i < game->world->obstacleAmount; i++) {
+		canvasSetPixel(game->world->obstacle[i].x, game->world->obstacle[i].y, 0.25);
 	}
 
-	struct position* snakeBody = getBody(world->snake);
-	for (int i = 1; i < world->snake->length; i++) {
+	struct position* snakeBody = getBody(game->world->snake);
+	for (int i = 1; i < game->world->snake->length; i++) {
 		canvasSetPixel(snakeBody[i].x, snakeBody[i].y, 0.8);
 	}
 
-	canvasSetPixel(getHead(world->snake).x, getHead(world->snake).y, 1);
+	canvasSetPixel(getHead(game->world->snake).x, getHead(game->world->snake).y, 1);
 }
 
-void cleanup(struct world* world)
+void cleanup()
 {
-	free(world->snake);
-	free(world);
+	free(game->world->snake);
+	free(game->world);
+	free(game);
 }
 
 int main(int argc, char* argv[])
@@ -68,34 +70,25 @@ int main(int argc, char* argv[])
 		return EXIT_FAILURE;
 	}
 	while (true) {
-		switch (promptGamemodeDecision()) {
-			case 1:
-				world = createWorld(0, 1);
-				break;
-			case 2:
-				world = createWorld(15, 2);
-				break;
-			default:
-				world = createWorld(0, 1);
-				break;
-		}
+
+		game = initGame();
 
 		if (qPressed) {
 			break;
 		}
 
-		while (updateWorld(world) == 0 && canvasUpdate() == 0) {
-			updateGamePixels(world);
+		while (gameStep(game) == 0 && canvasUpdate() == 0) {
+			updateGamePixels(game);
 			repaint();
 			if (qPressed) {
 				break;
 			}
 		}
 
+		enterPressed = false;
 		qPressed = false;
-		//score animation
 
-		cleanup(world);
+		cleanup();
 	}
 
 

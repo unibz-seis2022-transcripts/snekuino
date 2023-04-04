@@ -152,10 +152,12 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pixelhelper.cpp" />
     <ClCompile Include="snake.cpp" />
+    <ClCompile Include="game.cpp" />
     <ClCompile Include="world.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="canvas.h" />
+    <ClInclude Include="game.h" />
     <ClInclude Include="gamemode.h" />
     <ClInclude Include="pixelhelper.h" />
     <ClInclude Include="snake.h" />
