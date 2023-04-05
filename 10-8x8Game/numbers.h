@@ -14,6 +14,5 @@ position numberZeroPixels[];
 
 position* digitPixelArrays[];
 
-void printNumber(int value);
-void printLeftDigit(int value);
-void printRightDigit(int value);
+void drawDigit(int value, int translateX, int translateY);
+void drawNumber(int value, int translateY = 0);

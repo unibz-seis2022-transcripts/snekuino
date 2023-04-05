@@ -3,6 +3,7 @@
 #include "pixelhelper.h"
 #include "canvas.h"
 #include <stdlib.h>
+#include "numbers.h"
 
 extern bool aPressed;
 extern bool enterPressed;
@@ -14,35 +15,12 @@ struct gamemodeState {
 	int chosenGamemode;
 };
 
-position numberOnePixels[] = {
-		{ 1, 4 },
-		{ 0, 3 },
-		{ 1, 3 },
-		{ 1, 2 },
-		{ 1, 1 },
-		{ 1, 0 },
-};
-int numberOnePixelsLength = sizeof(numberOnePixels) / sizeof(numberOnePixels[0]);
-
-position numberTwoPixels[] = {
-	{ 4, 4 },
-	{ 5, 4 },
-	{ 6, 3 },
-	{ 5, 2 },
-	{ 4, 1 },
-	{ 4, 0 },
-	{ 5, 0 },
-	{ 6, 0 }
-};
-int numberTwoPixelsLength = sizeof(numberTwoPixels) / sizeof(numberTwoPixels[0]);
-
 position cursorOnePixels[] = {
 	{ 0, 7 },
 	{ 1, 7 },
 	{ 2, 7 },
 	{ 1, 6 },
 };
-int cursorPixelsLength = sizeof(cursorOnePixels) / sizeof(cursorOnePixels[0]);
 
 position cursorTwoPixels[] = {
 	{ 4, 7 },
@@ -50,12 +28,12 @@ position cursorTwoPixels[] = {
 	{ 6, 7 },
 	{ 5, 6 },
 };
+int cursorPixelsLength = sizeof(cursorOnePixels) / sizeof(cursorOnePixels[0]);
 
 void updateGamemodePixels(struct gamemodeState* state) { 
 	clearPixels();
 
-	drawPixels(numberOnePixels, numberOnePixelsLength);
-	drawPixels(numberTwoPixels, numberTwoPixelsLength);
+	drawNumber(12);
 
 	if (state->cursorPosition == 1) {
 		drawPixels(cursorOnePixels, cursorPixelsLength);
