@@ -150,6 +150,7 @@
     <ClCompile Include="gamemode.cpp" />
     <ClCompile Include="glad.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="numbers.cpp" />
     <ClCompile Include="pixelhelper.cpp" />
     <ClCompile Include="snake.cpp" />
     <ClCompile Include="world.cpp" />
@@ -157,6 +158,7 @@
   <ItemGroup>
     <ClInclude Include="canvas.h" />
     <ClInclude Include="gamemode.h" />
+    <ClInclude Include="numbers.h" />
     <ClInclude Include="pixelhelper.h" />
     <ClInclude Include="snake.h" />
     <ClInclude Include="world.h" />
