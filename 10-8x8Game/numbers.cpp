@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "pixelhelper.h"
 
-position numberOnePixels[] = {
+struct position numberOnePixels[] = {
 	{ 2, 4 },
 	{ 1, 3 },
 	{ 2, 3 },
@@ -11,18 +11,18 @@ position numberOnePixels[] = {
 	{ 2, 0 },
 };
 
-position numberTwoPixels[] = {
+struct position numberTwoPixels[] = {
 	{ 0, 4 },
 	{ 1, 4 },
 	{ 2, 3 },
 	{ 1, 2 },
 	{ 0, 1 },
 	{ 0, 0 },
-	{ 0, 1 },
-	{ 0, 2 },
+	{ 1, 0 },
+	{ 2, 0 },
 };
 
-position numberThreePixels[] = {
+struct position numberThreePixels[] = {
 	{ 0, 4 },
 	{ 1, 4 },
 	{ 2, 4 },
@@ -33,7 +33,7 @@ position numberThreePixels[] = {
 	{ 0, 0 },
 };
 
-position numberFourPixels[] = {
+struct position numberFourPixels[] = {
 	{ 2, 4 },
 	{ 1, 3 },
 	{ 0, 2 },
@@ -43,7 +43,7 @@ position numberFourPixels[] = {
 	{ 2, 0 },
 };
 
-position numberFivePixels[] = {
+struct position numberFivePixels[] = {
 	{ 0, 0 },
 	{ 1, 0 },
 	{ 2, 1 },
@@ -54,7 +54,7 @@ position numberFivePixels[] = {
 	{ 2, 4 },
 };
 
-position numberSixPixels[] = {
+struct position numberSixPixels[] = {
 	{ 2, 4 },
 	{ 1, 4 },
 	{ 0, 4 },
@@ -69,7 +69,7 @@ position numberSixPixels[] = {
 	{ 1, 2 },
 };
 
-position numberSevenPixels[] = {
+struct position numberSevenPixels[] = {
 	{ 0, 4 },
 	{ 1, 4 },
 	{ 2, 4 },
@@ -79,7 +79,7 @@ position numberSevenPixels[] = {
 	{ 1, 0 },
 };
 
-position numberEightPixels[] = {
+struct position numberEightPixels[] = {
 	{ 0, 0 },
 	{ 1, 0 },
 	{ 2, 0 },
@@ -95,7 +95,7 @@ position numberEightPixels[] = {
 	{ 2, 4 },
 };
 
-position numberNinePixels[] = {
+struct position numberNinePixels[] = {
 	{ 0, 0 },
 	{ 1, 0 },
 	{ 2, 1 },
@@ -109,7 +109,7 @@ position numberNinePixels[] = {
 	{ 2, 4 },
 };
 
-position numberZeroPixels[] = {
+struct position numberZeroPixels[] = {
 	{ 0, 0 },
 	{ 1, 0 },
 	{ 2, 0 },
@@ -124,24 +124,30 @@ position numberZeroPixels[] = {
 	{ 2, 4 },
 };
 
-struct pixelAndLength {
-	position* pixels;
-	int length;
-};
-
-
-
-struct pixelAndLength* digitPixelArrays[] = {
-	{numberZeroPixels[0], 1}
-	/*numberOnePixels,
-	numberTwoPixels,
+struct position* digitPixelArrays[] = {
+	numberZeroPixels,	
+	numberOnePixels,  
+	numberTwoPixels,	
 	numberThreePixels,
-	numberFourPixels,
-	numberFivePixels,
-	numberSixPixels,
+	numberFourPixels,	
+	numberFivePixels,	
+	numberSixPixels,	
 	numberSevenPixels,
 	numberEightPixels,
-	numberNinePixels,*/
+	numberNinePixels,	
+};
+
+int lengths[] = {
+	12,
+	6,
+	8,
+	8,
+	7,
+	8,
+	12,
+	7,
+	13,
+	12,
 };
 
 struct position* translatePixels(struct position* pixels, int lengthPixels, int translateX, int translateY) {
@@ -154,8 +160,8 @@ struct position* translatePixels(struct position* pixels, int lengthPixels, int 
 
 void drawDigit(int value, int translateX, int translateY) {
 	int digit = value % 10;
-	struct position pixels[] = digitPixelArrays[digit];
-	int lengthPixels = sizeof(pixels) / sizeof(pixels[0]);
+	struct position* pixels = digitPixelArrays[digit];
+	int lengthPixels = lengths[digit];
 
 	struct position* translatedPixels = translatePixels(pixels, lengthPixels, translateX, translateY);
 	drawPixels(translatedPixels, lengthPixels);
