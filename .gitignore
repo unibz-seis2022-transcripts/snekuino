@@ -234,3 +234,6 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+.DS_Store
+/Snek presentation.key
+/Snek presentation.pdf
