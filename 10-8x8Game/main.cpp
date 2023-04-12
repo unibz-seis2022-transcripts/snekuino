@@ -14,6 +14,8 @@
 #include "pixelhelper.h"
 #include "gamemode.h"
 #include "game.h"
+#include "numbers.h"
+#include "score.h"
 
 #define WINDOW_X	100
 #define WINDOW_Y	100
@@ -87,6 +89,9 @@ int main(int argc, char* argv[])
 
 		enterPressed = false;
 		qPressed = false;
+
+		int score = game->world->snake->length;
+		promptScore(score);
 
 		cleanup();
 	}
