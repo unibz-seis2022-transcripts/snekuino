@@ -5,17 +5,18 @@
 
 void updateScorePixels(int score) {
 	clearPixels();
-	drawNumber(score);
+	drawNumber(score, 1);
 }
 
 void promptScore(int score) {
-	while (canvasUpdate() == 0)
-	{
-		if (qPressed) {
+	int delay = 1000;
+	while (canvasUpdate() == 0) {
+		if (qPressed || delay <= 0) {
 			canvasClose();
 			break;
 		}
 		updateScorePixels(score);
 		repaint();
+		delay--;
 	}
 }

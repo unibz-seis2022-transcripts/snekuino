@@ -155,6 +155,7 @@
     <ClCompile Include="score.cpp" />
     <ClCompile Include="snake.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="snakeOutro.cpp" />
     <ClCompile Include="world.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +166,7 @@
     <ClInclude Include="pixelhelper.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="snake.h" />
+    <ClInclude Include="snakeOutro.h" />
     <ClInclude Include="world.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

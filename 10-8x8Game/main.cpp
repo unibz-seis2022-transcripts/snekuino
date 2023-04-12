@@ -90,7 +90,7 @@ int main(int argc, char* argv[])
 		enterPressed = false;
 		qPressed = false;
 
-		int score = game->world->snake->length;
+		int score = game->world->snake->length-1;
 		promptScore(score);
 
 		cleanup();
