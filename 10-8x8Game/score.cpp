@@ -3,7 +3,7 @@
 #include "numbers.h"
 #include "pixelhelper.h"
 
-void updateScorePixels(int score) {
+void updateSnekPixels(int score) {
 	clearPixels();
 	drawNumber(score, 1);
 }
@@ -15,7 +15,7 @@ void promptScore(int score) {
 			canvasClose();
 			break;
 		}
-		updateScorePixels(score);
+		updateSnekPixels(score);
 		repaint();
 		delay--;
 	}
