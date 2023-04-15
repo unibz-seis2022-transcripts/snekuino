@@ -57,8 +57,20 @@ void updateGamePixels(struct game* game) {
 	canvasSetPixel(getHead(game->world->snake).x, getHead(game->world->snake).y, 1);
 }
 
-void cleanup()
-{
+void printHelp() {
+	printf("========== CONTROLS ==========\n");
+	printf("=   w   -> move up           =\n");
+	printf("=   s   -> move down         =\n");
+	printf("=   a   -> move left         =\n");
+	printf("=   d   -> move right        =\n");
+	printf("=   q   -> quit game         =\n");
+	printf("=         /quit app          =\n");
+	printf("= enter -> skip animation    =\n");
+	printf("=         /choose gamemode   =\n");
+	printf("==============================\n");
+}
+
+void cleanup() {
 	free(game->world->snake);
 	free(game->world);
 	free(game);
@@ -67,6 +79,7 @@ void cleanup()
 int main(int argc, char* argv[])
 {
 	srand(time(NULL));
+	printHelp();
 	if (canvasInit(WINDOW_X, WINDOW_Y, WINDOW_WIDTH, WINDOW_HEIGHT, rows, cols))
 	{
 		printf("ERROR: init failed (invalid argument?)\n");
