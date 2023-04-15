@@ -58,15 +58,21 @@ void updateGamePixels(struct game* game) {
 }
 
 void printHelp() {
+	printf("==============================\n");
+	printf("========== GAMEMODES =========\n");
+	printf("==  1   ->  classic mode    ==\n");
+	printf("==  2   ->  labirinth mode  ==\n");
+	printf("==============================\n");
 	printf("========== CONTROLS ==========\n");
-	printf("=   w   -> move up           =\n");
-	printf("=   s   -> move down         =\n");
-	printf("=   a   -> move left         =\n");
-	printf("=   d   -> move right        =\n");
-	printf("=   q   -> quit game         =\n");
-	printf("=         /quit app          =\n");
-	printf("= enter -> skip animation    =\n");
-	printf("=         /choose gamemode   =\n");
+	printf("==   w   -> move up         ==\n");
+	printf("==   s   -> move down       ==\n");
+	printf("==   a   -> move left       ==\n");
+	printf("==   d   -> move right      ==\n");
+	printf("==   q   -> quit game       ==\n");
+	printf("==         /quit app        ==\n");
+	printf("== enter -> skip animation  ==\n");
+	printf("==         /choose gamemode ==\n");
+	printf("==============================\n");
 	printf("==============================\n");
 }
 
