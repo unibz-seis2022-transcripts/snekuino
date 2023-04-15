@@ -61,7 +61,7 @@ void printHelp() {
 	printf("==============================\n");
 	printf("========== GAMEMODES =========\n");
 	printf("==  1   ->  classic mode    ==\n");
-	printf("==  2   ->  labirinth mode  ==\n");
+	printf("==  2   ->  labyrinth mode  ==\n");
 	printf("==============================\n");
 	printf("========== CONTROLS ==========\n");
 	printf("==   w   -> move up         ==\n");
