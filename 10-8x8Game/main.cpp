@@ -16,6 +16,7 @@
 #include "game.h"
 #include "numbers.h"
 #include "score.h"
+#include "snakeOutro.h"
 
 #define WINDOW_X	100
 #define WINDOW_Y	100
@@ -73,6 +74,8 @@ int main(int argc, char* argv[])
 	}
 	while (true) {
 
+		enterPressed = false;
+
 		game = initGame();
 
 		if (qPressed) {
@@ -90,7 +93,19 @@ int main(int argc, char* argv[])
 		enterPressed = false;
 		qPressed = false;
 
+		setUpOutro(game);
+		while (outroStep(game) && canvasUpdate() == 0) {
+			updateGamePixels(game);
+			repaint();
+			if (enterPressed) {
+				break;
+			}
+		}
+
+		enterPressed = false;
+
 		int score = game->world->snake->length-1;
+		
 		promptScore(score);
 
 		cleanup();

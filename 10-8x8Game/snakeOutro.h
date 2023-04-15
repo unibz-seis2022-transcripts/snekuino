@@ -1,3 +1,6 @@
 #pragma once
+#include "game.h"
 
-void promptSnakeOutro(struct game* game);
+void setUpOutro(game* game);
+
+bool outroStep(game* game);

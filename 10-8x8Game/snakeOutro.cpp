@@ -2,54 +2,65 @@
 #include "canvas.h"
 #include "pixelhelper.h"
 #include "snake.h"
-#include "game.h"
 #include "world.h"
-
-#define DELAY_SPEED 200
+#include <stdlib.h>
 
 extern int rows;
 extern int cols;
 
-int boundaryRight = cols-1;
-int boundaryTop = rows-1;
-int boundaryLeft = 0;
-int boundaryBottom = 0;
+int boundaryRight;
+int boundaryTop;
+int boundaryLeft;
+int boundaryBottom;
 
-int maxSnekLength = 0;
-int delay = DELAY_SPEED;
+int maxLength;
+int speed;
 
-void updateSnekPixels(world* world) {
-	clearPixels();
-	
+void setUpOutro(game* game) {
+	boundaryRight = cols - 1;
+	boundaryTop = rows - 1;
+	boundaryLeft = -1;
+	boundaryBottom = 0;
+
+	game->world->obstacleAmount = 0;
+	game->world->obstacle = NULL;
+	game->world->foodAmount = 0;
+	game->world->food = NULL;
+	maxLength = 64;
+	//maxLength = game->world->snake->length;
+	speed = game->world->snake->speed;
+	game->stepDelay = speed;
+	game->world->snake = createSnake();
+	game->world->snake->direction = { 1, 0 };
 }
 
-void changeDir(struct snake* snake) {
-	if (snake->body[0].pos.x + snake->direction.x-)
-}
+bool outroStep(game* game) {
+	if (game->stepDelay <= 0) {
+		struct position head = getHead(game->world->snake);
+		
+		if (head.x == boundaryRight && head.y == boundaryBottom) {
+			game->world->snake->direction = { 0, 1 };
+			boundaryLeft++;
+		}
+		if (head.x == boundaryRight && head.y == boundaryTop) {
+			game->world->snake->direction = { -1, 0 };
+			boundaryBottom++;
+		}
+		if (head.x == boundaryLeft && head.y == boundaryTop) {
+			game->world->snake->direction = { 0, -1 };
+			boundaryRight--;
+		}
+		if (head.x == boundaryLeft && head.y == boundaryBottom) {
+			game->world->snake->direction = { 1, 0 };
+			boundaryTop--;
+		}
 
-int outroStep(world* world) {
-	if (delay <= 0) {
-		changeDir(world->snake);
-		game->stepDelay = game->world->snake->speed;
-		return updateWorld(game->world);
+		grow(game->world->snake);
+		game->stepDelay = speed;
 	}
+
 	game->stepDelay -= 10;
-	return 0;
-}
 
-void promptSnakeOutro(game* game) {
-	maxSnekLength = game->world->snake->length;
-	struct world* world = createWorld(0, 0);
-	while (outroStep(world) == 0 && canvasUpdate() == 0) {
-		updateSnekPixels(world);
-		if (delay <= 0) {
-			delay = DELAY_SPEED;
-		}
-		if (qPressed) {
-			canvasClose();
-			break;
-		}
-		repaint();
-		delay-=10;
-	}
+	//return gameStep(game, true) && (game->world->snake->length == maxLength);
+	return game->world->snake->length <= maxLength;
 }
