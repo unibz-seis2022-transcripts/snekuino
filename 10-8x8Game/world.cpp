@@ -20,9 +20,9 @@ bool isPositionOccupied(struct position pos, struct position* occupied, int occu
 
 int snakeWillEat(struct world* world) {
 	for (int i = 0; i < world->foodAmount; i++) {
-		if ((world->food[i].x == getHead(world->snake).x + world->snake->direction.x)
+		if ((world->food[i].x == (getHead(world->snake).x + world->snake->direction.x + rows) % rows)
 			&&
-		    (world->food[i].y == getHead(world->snake).y + world->snake->direction.y)
+			(world->food[i].y == (getHead(world->snake).y + world->snake->direction.y + cols) % cols)
 		) {
 			return i;
 		}
