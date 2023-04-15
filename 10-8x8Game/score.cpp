@@ -9,14 +9,13 @@ void updateSnekPixels(int score) {
 }
 
 void promptScore(int score) {
-	int delay = 1000;
+	int delay = 800;
 	while (canvasUpdate() == 0) {
-		if (qPressed || delay <= 0) {
-			canvasClose();
-			break;
+		if (enterPressed || delay <= 0) {
+			return;
 		}
 		updateSnekPixels(score);
 		repaint();
-		delay--;
+		delay-=10;
 	}
 }
