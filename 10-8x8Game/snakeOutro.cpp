@@ -26,8 +26,7 @@ void setUpOutro(game* game) {
 	game->world->obstacle = NULL;
 	game->world->foodAmount = 0;
 	game->world->food = NULL;
-	maxLength = 64;
-	//maxLength = game->world->snake->length;
+	maxLength = game->world->snake->length;
 	speed = game->world->snake->speed;
 	game->stepDelay = speed;
 	game->world->snake = createSnake();
