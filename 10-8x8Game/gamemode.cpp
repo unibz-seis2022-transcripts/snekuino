@@ -13,10 +13,10 @@ extern bool qPressed;
 gameMode chosenGamemode;
 
 position cursorOnePixels[] = {
-	{ 0, 7 },
 	{ 1, 7 },
 	{ 2, 7 },
-	{ 1, 6 },
+	{ 3, 7 },
+	{ 2, 6 },
 };
 
 position cursorTwoPixels[] = {
