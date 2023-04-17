@@ -124,7 +124,7 @@ int canvasInit(int x, int y, int width, int height, int resolutionX, int resolut
 	glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
 
-	window = glfwCreateWindow(width, height, "LED-Matrix Game", NULL, NULL);
+	window = glfwCreateWindow(width, height, "Snek", NULL, NULL);
 	if (!window)
 	{
 		printf("failed to init glfw\n");
@@ -154,7 +154,7 @@ int canvasInit(int x, int y, int width, int height, int resolutionX, int resolut
 		return -1;
 	}
 
-	printf("Your OpenGL version: %s\n Enjoy your graphics performance\n", glGetString(GL_VERSION));
+	//printf("Your OpenGL version: %s\n Enjoy your graphics performance\n", glGetString(GL_VERSION));
 
 	glPointSize(4);
 	glLineWidth(1);

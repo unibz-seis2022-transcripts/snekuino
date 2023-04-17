@@ -60,6 +60,5 @@ bool outroStep(game* game) {
 
 	game->stepDelay -= 10;
 
-	//return gameStep(game, true) && (game->world->snake->length == maxLength);
 	return game->world->snake->length <= maxLength;
 }
