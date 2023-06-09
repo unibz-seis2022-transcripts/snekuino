@@ -6,13 +6,8 @@ struct position {
 	int y;
 };
 
-struct body {
-	struct position pos;
-	struct body* next;
-};
-
 struct snake {
-	struct body* body;
+	struct position body[64];
 	struct position direction;
 	float speed;
 	int length;
