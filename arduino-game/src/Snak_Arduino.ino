@@ -10,6 +10,7 @@
 #include "Button.h"
 #include "Buzzer.h"
 #include "VibroMotor.h"
+#include "Calibration.h"
 #include "ManageInterrupt.h"
 #include "Scheduler.h"
 #include "Task.h"
@@ -40,6 +41,9 @@ bool dPressed = false;
 bool sPressed = false;
 bool wPressed = false;
 
+float deltaAngleX = 0;
+float deltaAngleY = 0;
+
 struct game* game;
 Scheduler scheduler;
 enum GAME_STATE gameState;
@@ -62,6 +66,9 @@ void setup() {
 	Button*     quitButton  = new Button(QUIT_BUTTON_PIN);
 	Button*     enterButton = new Button(ENTER_BUTTON_PIN);
 	MD_MAX72XX* display     = new MD_MAX72XX(HARDWARE_TYPE, DATA_PIN, CLK_PIN, CS_PIN, MAX_DEVICES);
+	display->begin();
+
+	calibrate(gyroscope, buzzer, display);
 
 	GameControlsTask*    gameControlTask     = new GameControlsTask(gyroscope);
 	GameTask*            gameTask		     = new GameTask();

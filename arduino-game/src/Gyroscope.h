@@ -6,13 +6,13 @@
 class Gyroscope {
   public:
     Gyroscope(int address);
-    int getAngleX();
-    int getAngleY();
+    float getAngleX();
+    float getAngleY();
 
   private:
     GY521* gyroscope;
-    int   angleX;
-    int   angleY;
+    float   angleX;
+    float   angleY;
     float alpha;
 };
 

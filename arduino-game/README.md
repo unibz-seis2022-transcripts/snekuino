@@ -2,6 +2,8 @@
 
 ## Gameplay (logic + controls)
 
+When starting the game, first the gyroscope is being calibrated. While this is happening an hour glass is shown so that the player know that he needs to wait shortly.
+
 The game has two game modes: Mode 1 for the classic snake game, Mode 2 for a harder version that involves obstacles that the player needs to avoid. 
 
 The green button is used for choosing the game mode and starting the game, the red button can be used to quit a running game.

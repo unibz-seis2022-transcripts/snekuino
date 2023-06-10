@@ -74,7 +74,6 @@ DisplayTask::DisplayTask(MD_MAX72XX *display) {
 
 void DisplayTask::init(int period) {
 	Task::init(period);
-	this->display->begin();
 }
 
 void DisplayTask::displayFood(struct position* food, int foodAmount, bool foodBlinking) {

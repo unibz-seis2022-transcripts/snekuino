@@ -21,13 +21,13 @@ Gyroscope::Gyroscope(int address) {
   this->alpha  = 0.1;
 }
 
-int Gyroscope::getAngleX() {
+float Gyroscope::getAngleX() {
   this->gyroscope->read();
   this->angleX = (this->alpha * this->gyroscope->getAngleX()) + (1 - this->alpha) * this->angleX;
   return this->angleX;
 }
 
-int Gyroscope::getAngleY() {
+float Gyroscope::getAngleY() {
   this->gyroscope->read();
   this->angleY = (this->alpha * this->gyroscope->getAngleY()) + (1 - this->alpha) * this->angleY;
   return this->angleY;

@@ -14,6 +14,9 @@ extern bool dPressed;
 extern bool sPressed;
 extern bool wPressed;
 
+extern float deltaAngleX;
+extern float deltaAngleY;
+
 extern struct game* game;
 extern enum GAME_STATE gameState;
 
@@ -31,10 +34,10 @@ void GameControlsTask::tick() {
   sPressed = false;
   wPressed = false;
 
-  int angleX = this->gyroscope->getAngleX();
-  int angleY = this->gyroscope->getAngleY();
+  float angleX = this->gyroscope->getAngleX() - deltaAngleX;
+  float angleY = this->gyroscope->getAngleY() - deltaAngleY;
 
-  int speed = game->world->snake->speed; 
+  float speed = game->world->snake->speed; 
 
   if (angleX > SENSITIVITY) { //TODO: find optimal value
     aPressed = true;
@@ -45,10 +48,14 @@ void GameControlsTask::tick() {
   }
 
   if (angleY > SENSITIVITY) {
-	speed = map(min(angleY, MAX_ANGLE), 0, MAX_ANGLE, MIN_SPEED, MAX_SPEED);
+	if (!(aPressed || dPressed)) {
+		speed = map(min(angleY, MAX_ANGLE), 0, MAX_ANGLE, MIN_SPEED, MAX_SPEED);
+	}
     wPressed = true;
   } else if (angleY < -SENSITIVITY) {
-	speed = map(max(angleY, -MAX_ANGLE), -MAX_ANGLE, 0, MAX_SPEED, MIN_SPEED);
+	if (!(aPressed || dPressed)) {
+		speed = map(max(angleY, -MAX_ANGLE), -MAX_ANGLE, 0, MAX_SPEED, MIN_SPEED);
+	}
     sPressed = true;
   }
 
