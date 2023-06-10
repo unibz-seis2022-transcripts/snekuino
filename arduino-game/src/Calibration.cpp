@@ -147,6 +147,7 @@ void calibrate(Gyroscope* gyroscope, Buzzer* buzzer, MD_MAX72XX* display) {
 		// delay(1);
 		calibrationTime += 1;
 	}
+	display->clear();
 	deltaAngleX = averageX / count;
 	deltaAngleY = averageY / count;
 	calibrationCompleteTune(buzzer);
