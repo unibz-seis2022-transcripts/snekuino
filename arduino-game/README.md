@@ -28,7 +28,7 @@ To make the game more usable and enjoyable we soldered our components to a proto
 
 We designed and 3d-printed a case to hold the Arduino, the power supply (a 9V battery) and the SnekShield™. The case consists of three parts, the .stl files can be found in `schematics/3d-case/`. The different parts then need to be screwed together using
 
-## Items we used
+## Items used
 
 - Arduino Uno
 - MPU 6050 Gyroscope
@@ -41,3 +41,6 @@ We designed and 3d-printed a case to hold the Arduino, the power supply (a 9V ba
  
 ## How to compile and upload the code to Arduino
 
+The sorce code is organised using the PlatformIO extension for VS Code. Therefore, just open this folder (the one that holds the `platformio.ini` file) in VS Code and then the extension should be able to build and upload the program to the board.
+
+Otherwise, for using the Arduino IDE, move the files from the `src` folder into a folder called `snak_arduino` and open this new folder in the IDE.
