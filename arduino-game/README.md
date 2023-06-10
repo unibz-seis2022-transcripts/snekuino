@@ -26,7 +26,7 @@ To make the game more usable and enjoyable we soldered our components to a proto
 
 ## 3D case files
 
-We designed and 3d-printed a case to hold the Arduino, the power supply (a 9V battery) and the SnekShield™. The case consists of three parts, the .stl files can be found in `schematics/3d-case/`. The different parts then need to be screwed together using
+We designed and 3d-printed a case to hold the Arduino, the power supply (a 9V battery) and the SnekShield™. The case consists of three parts, the .stl files can be found in `schematics/3d-case/`. The different parts then need to be screwed together using 3x12mm screws.
 
 ## Items used
 
