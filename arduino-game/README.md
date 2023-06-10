@@ -4,7 +4,7 @@
 
 When starting the game, first the gyroscope is being calibrated. While this is happening an hour glass is shown so that the player know that he needs to wait shortly. When done, it will play a short jingle and prompt the mode selection screen.
 
-The game has two game modes: Mode 1 for the classic snake game, Mode 2 for a harder version that involves obstacles that the player needs to avoid. 
+The game has two game modes: Mode 1 for the classic snake game, mode 2 for a harder version that involves obstacles that the player needs to avoid.
 
 The green button is used for choosing the game mode and starting the game, the red button can be used to quit a running game.
 
@@ -28,7 +28,7 @@ To make the game more usable and enjoyable we soldered our components to a proto
 
 ## 3D case files
 
-We designed and 3d-printed a case to hold the Arduino, the power supply (a 9V battery) and the SnekShield™. The case consists of three parts, the .stl files can be found in `schematics/3d-case/`. The different parts then need to be screwed together using 3x12mm screws.
+We designed and 3D-printed a case to hold the Arduino, the power supply (a 9V battery) and the SnekShield™. The case consists of three parts, the .stl files can be found in `schematics/3d-case/`. The different parts then need to be screwed together using 8 3x12mm screws.
 
 ## Items used
 
@@ -40,9 +40,9 @@ We designed and 3d-printed a case to hold the Arduino, the power supply (a 9V ba
 - Buzzer
 - Two Buttons
 - 1 kΩ resistor
- 
+
 ## How to compile and upload the code to Arduino
 
-The sorce code is organised using the PlatformIO extension for VS Code. Therefore, just open this folder (the one that holds the `platformio.ini` file) in VS Code and then the extension should be able to build and upload the program to the board.
+The source code is organised using the PlatformIO extension for VS Code. Therefore, just open this folder (the one that holds the `platformio.ini` file) in VS Code and then the extension should be able to build and upload the program to the board.
 
 Otherwise, for using the Arduino IDE, move the files from the `src` folder into a folder called `snak_arduino` and open this new folder in the IDE. Then, also the necessary libraries need to be installed. They can be found in the `platformio.ini` file in the `lib_deps` section.
