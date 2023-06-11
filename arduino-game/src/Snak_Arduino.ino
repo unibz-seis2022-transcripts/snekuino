@@ -71,7 +71,7 @@ void setup() {
 	calibrate(gyroscope, buzzer, display);
 
 	GameControlsTask*    gameControlTask     = new GameControlsTask(gyroscope);
-	GameTask*            gameTask		     = new GameTask();
+	GameTask*            gameTask		     		 = new GameTask();
 	DisplayTask*         displayTask         = new DisplayTask(display);
 	SensoryFeedbackTask* sensoryFeedbackTask = new SensoryFeedbackTask(buzzer, vibroMotor);
 	sensoryFeedbackTask ->init(10);
