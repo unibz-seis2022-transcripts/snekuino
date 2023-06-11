@@ -39,24 +39,20 @@ void GameControlsTask::tick() {
 
   float speed = game->world->snake->speed; 
 
+  if (angleY > SENSITIVITY) {
+	  speed = map(min(angleY, MAX_ANGLE), 0, MAX_ANGLE, MIN_SPEED, MAX_SPEED);
+	  wPressed = true;
+  } else if (angleY < -SENSITIVITY) {
+	  speed = map(max(angleY, -MAX_ANGLE), -MAX_ANGLE, 0, MAX_SPEED, MIN_SPEED);
+	  sPressed = true;
+  }
+
   if (angleX > SENSITIVITY) { //TODO: find optimal value
     aPressed = true;
 	speed = map(min(angleX, MAX_ANGLE), 0, MAX_ANGLE, MIN_SPEED, MAX_SPEED);
   } else if (angleX < -SENSITIVITY) {
 	speed = map(max(angleX, -MAX_ANGLE), -MAX_ANGLE, 0, MAX_SPEED, MIN_SPEED);
     dPressed = true;
-  }
-
-  if (angleY > SENSITIVITY) {
-	if (!(aPressed || dPressed)) {
-		speed = map(min(angleY, MAX_ANGLE), 0, MAX_ANGLE, MIN_SPEED, MAX_SPEED);
-	}
-    wPressed = true;
-  } else if (angleY < -SENSITIVITY) {
-	if (!(aPressed || dPressed)) {
-		speed = map(max(angleY, -MAX_ANGLE), -MAX_ANGLE, 0, MAX_SPEED, MIN_SPEED);
-	}
-    sPressed = true;
   }
 
   if (gameState == IN_PROGRESS) {
