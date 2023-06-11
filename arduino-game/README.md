@@ -45,4 +45,4 @@ We designed and 3D-printed a case to hold the Arduino, the power supply (a 9V ba
 
 The source code is organised using the PlatformIO extension for VS Code. Therefore, just open this folder (the one that holds the `platformio.ini` file) in VS Code and then the extension should be able to build and upload the program to the board.
 
-Otherwise, for using the Arduino IDE, move the files from the `src` folder into a folder called `snak_arduino` and open this new folder in the IDE. Then, also the necessary libraries need to be installed. They can be found in the `platformio.ini` file in the `lib_deps` section.
+Otherwise, for using the Arduino IDE, move the files from the `src` folder into a folder called `Snak_Arduino` and open the `Snak_Arduino.ino` file in the IDE. Then, also the necessary libraries need to be installed. They can be found in the `platformio.ini` file in the `lib_deps` section.
