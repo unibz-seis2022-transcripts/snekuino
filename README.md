@@ -1,4 +1,4 @@
-# Snake Solaroli Scheibe (SSS or S3)
+# Snekuino
 
 This repository holds the resources for the final project for the course on Embedded Systems.
 
