@@ -131,15 +131,11 @@ void calibrationCompleteTune (Buzzer* buzzer) {
 void calibrate(Gyroscope* gyroscope, Buzzer* buzzer, MD_MAX72XX* display) {
     enum HOURGLASS_STATE hourglassState = TOP;
     int calibrationTime = 0;
-    int averageX = 0;
-    int averageY = 0;
-    int count = 0;
     while (calibrationTime < CALIBRATION_TIME) {
         displayHourGlass(hourglassState, display);
         if (calibrationTime % 10 == 0) {
-            averageX = averageX + gyroscope->getAngleX();
-            averageY = averageY + gyroscope->getAngleY();
-            count++;
+            deltaAngleX = gyroscope->getAngleX();
+            deltaAngleY = gyroscope->getAngleY();
         }
         if (calibrationTime % 30 == 0) {
             hourglassState = (HOURGLASS_STATE)((hourglassState+1)%3);
@@ -147,7 +143,5 @@ void calibrate(Gyroscope* gyroscope, Buzzer* buzzer, MD_MAX72XX* display) {
         calibrationTime += 1;
     }
     display->clear();
-    deltaAngleX = averageX / count;
-    deltaAngleY = averageY / count;
     calibrationCompleteTune(buzzer);
 }
