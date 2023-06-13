@@ -19,7 +19,7 @@ void initGame() {
 			initializeWorld(game->world, 0, 3);
 			break;
 		case LABYRINTH:
-			initializeWorld(game->world, 15, 2);
+			initializeWorld(game->world, 13, 2);
 			break;
 		default:
 			initializeWorld(game->world, 0, 1);

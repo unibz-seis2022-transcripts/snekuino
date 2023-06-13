@@ -11,9 +11,9 @@ class Gyroscope {
 
   private:
     GY521* gyroscope;
-    float   angleX;
-    float   angleY;
-    float alpha;
+    float  angleX;
+    float  angleY;
+    float  alpha;
 };
 
 #endif
