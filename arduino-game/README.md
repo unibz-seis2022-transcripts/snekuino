@@ -1,5 +1,7 @@
 # Snek Arduino Game
 
+![](img/snekuino.png)
+
 ## Gameplay (logic + controls)
 
 When starting the game, first the gyroscope is being calibrated. While this is happening an hour glass is shown so that the player know that he needs to wait shortly. When done, it will play a short jingle and prompt the mode selection screen.
