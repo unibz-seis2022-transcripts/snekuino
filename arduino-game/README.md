@@ -1,6 +1,6 @@
 # Snek Arduino Game
 
-![](img/snekuino.png)
+![](img/snekuino2.png)
 
 ## Gameplay (logic + controls)
 
