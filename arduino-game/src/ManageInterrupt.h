@@ -16,12 +16,6 @@ class ManageInterrupt {
 				gameState = PREPARE_GAME;
 				feedbackState = ENTER;
 			}
-			// if (gameState == OUTRO) {
-			// 	gameState = SCORE_PROMPT;
-			// }
-			// if (gameState == SCORE_PROMPT) {
-			// 	gameState = CHOOSE_GAME_MODE;
-			// }
 		}
 
 	static void QuitPressed() {

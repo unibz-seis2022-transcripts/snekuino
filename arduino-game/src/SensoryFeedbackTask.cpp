@@ -56,23 +56,23 @@ void SensoryFeedbackTask::tick() {
 			delayTune += 10;
       break;
     case OUTRO_TUNE_BEST_SCORE:
-			this->vibroMotor->turnOff();
-			if (delayTune < 100) {
-				this->buzzer->playSound(NOTE_A, 100);
-			} else if (delayTune < 200) {
-	      this->buzzer->playSound(NOTE_B, 100);
-			} else if (delayTune < 300) {
-        this->buzzer->playSound(NOTE_C_SHARP, 100);
-			} else if (delayTune < 500) {
-        this->buzzer->playSound(NOTE_E, 200);
-			} else if (delayTune < 580) {
-        this->buzzer->playSound(NOTE_C_SHARP, 80);
-			} else if (delayTune < 780) {
-        this->buzzer->playSound(NOTE_E, 200);
-				feedbackState = OFF;
-			}
-			delayTune += 10;
+		this->vibroMotor->turnOff();
+		if (delayTune < 100) {
+			this->buzzer->playSound(NOTE_A, 100);
+		} else if (delayTune < 200) {
+			this->buzzer->playSound(NOTE_B, 100);
+		} else if (delayTune < 300) {
+				this->buzzer->playSound(NOTE_C_SHARP, 100);
+		} else if (delayTune < 500) {
+			this->buzzer->playSound(NOTE_E, 200);
+		} else if (delayTune < 580) {
+			this->buzzer->playSound(NOTE_C_SHARP, 80);
+		} else if (delayTune < 780) {
+			this->buzzer->playSound(NOTE_E, 200);
 			feedbackState = OFF;
-      break;
+		}
+		delayTune += 10;
+		feedbackState = OFF;
+      	break;
 	}
 }
